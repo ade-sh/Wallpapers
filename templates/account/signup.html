@@ -1,0 +1,46 @@
+{% extends "../siteengine/base.html" %}
+{% block title %} Sign-up Page {% endblock title %}
+{% block content %}
+<form class="form col-md-auto ml-auto mr-auto" method="post" action="{% url 'signup' %}">
+    {% csrf_token %}
+    {% for field in form %}
+    <div class="form-group ">
+      {{ field.label_tag }}
+        {% if "password" in field.name %}
+        <input type="password" class="form-control" id="for{{ field.name }}" name ="{{ field.name }}" aria-describedby="{{ field.name }}Help" placeholder="Enter {{ field.name }}">
+        {% else %}
+        <input type="text" class="form-control" id="{{ field.name }}" name ="{{ field.name }}" aria-describedby="{{ field.name }}Help" placeholder="Enter {{ field.name }}">
+        {% endif %}
+
+        {% if field.name == "email" %}
+        <small id="emailHelp" class="form-text text-muted ">We'll never share your email with anyone else.</small>
+        {% endif %}
+        {% for error in field.errors %}
+        <strong id="errorMessage{{ field.name}}" class="form-text text-muted text-danger">{{error}}</strong>
+        {% endfor %}
+    </div>
+     {% endfor %}
+    <!--<div class="form-group">
+      <label for="email">Email address</label>
+      <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email">
+      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    </div>
+    <div class="form-group">
+      <label for="password1">Password</label>
+      <input type="password" class="form-control" id="password1" name="password1" aria-describedby="passwordHelp" placeholder="Enter password">
+      </div>
+    <div class="form-group">
+      <label for="password2">Confirm Password</label>
+      <input type="password" class="form-control" id="password2" name="password2" aria-describedby="passwordHelp" placeholder="Confirm password">
+      </div>-->
+    <div class="form-check">
+      <label class="form-check-label">
+        <input class="form-check-input" type="checkbox">
+        <span class="form-check-sign"></span>
+        log me in
+      </label>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+
+{%endblock content %}

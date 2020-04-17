@@ -1,0 +1,43 @@
+{% extends "./browserPages.html" %}
+{% block title %} Home Page {% endblock title %}
+{% load static %}
+{% block carousel %}
+<!--Start of carousel-->
+
+<div class="carousel slide" data-ride="carousel" id="carouselIndicators">
+    <ol class="carousel-indicators">
+        <li data-slide-to="0" data-target="#carouselIndicators"></li>
+        <li class="active" data-slide-to="1" data-target="#carouselIndicators"></li>
+        <li data-slide-to="2" data-target="#carouselIndicators"></li>
+    </ol>
+    {% for car in carousel %}
+    {% if forloop.first %}
+    <div class="carousel-inner" role="listbox" style="width:100%; height: 500px">
+        <a href="{% url 'WDPage' car.img1.id%}" class="stretched-link"></a>
+        <div class="carousel-item active">
+            <img alt="First slide" class="d-block min-vh-100" src="{{ car.img1.image.url }}">
+            <div class="carousel-caption">
+                <h5>car.img1.title</h5>
+            </div>
+        </div>
+        {% else %}
+        <div class="carousel-item">
+            <a href="{% url 'WDPage' car.img1.id%}" class="stretched-link"></a>
+            <img alt="Second slide" class="d-block min-vh-100" src="{{car.img1.image.url }}">
+            <div class="carousel-caption">
+                <h5>car.img1.title</h5>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+
+        <a class="carousel-control-prev" data-slide="prev" href="#carouselIndicators" role="button">
+            <i class="now-ui-icons arrows-1_minimal-left"></i>
+        </a>
+        <a class="carousel-control-next" data-slide="next" href="#carouselIndicators" role="button">
+            <i class="now-ui-icons arrows-1_minimal-right"></i>
+        </a>
+    </div>
+</div>
+<!--End of carousel-->
+{% endblock carousel %}

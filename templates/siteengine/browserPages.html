@@ -1,0 +1,48 @@
+{% extends "./base.html" %}
+{% block title %} Wallpapers {% endblock title %}
+{% load static %}
+{% block content %}
+<!--Start of Card Group-->
+<div class="container mr-auto ml-auto mt-5">
+    <div class="row row-cols-1 row-cols-md-2">
+
+        {% for wallpapers in wallpaperset %}
+        <div class="col mb-4">
+            <div class="card" style="width: 18rem;">
+                <img alt={{wallpapers.title}} class="card-img-top" src="{{wallpapers.image.url}}">
+                <div class="card-body">
+                    <a href="{% url 'WDPage' wallpapers.id%}" class="stretched-link"></a>
+                    <p class="card-text">{{wallpapers.title}}</p>
+                    <a href="{% url 'browse_category' wallpapers.category.category_name%}" class="badge badge-{{wallpapers.category.color}}">{{wallpapers.category.category_name}}</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <!--End of Card Groups-->
+        <!--Start of Pagination-->
+        <div class="container">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    {% if  page_number|add:'-2' > 1 %}
+                    <li class="page-item"><a class="page-link" href="{% url page_number|add:'-2' %}">Previous</a></li>
+                    {% endif %}
+                    {% for j in page_set%}
+                        {% if not j > num_pages and j != 0 %}
+                            {% if j == page_number %}
+                            <li class="page-item active"><a class="page-link" href="{% url 'browsePage' j%}">{{ j }}</a></li>
+                            {% else %}
+                            <li class="page-item"><a class="page-link" href="{% url 'browsePage' j%}">{{ j }}</a></li>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    {% if not page_number|add:2 > num_pages %}
+                    <li class="page-item"><a class="page-link" href="{% url 'browsePage' page_number|add:2 %}">Next</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+        <!--End of Pagination-->
+    </div>
+</div>
+{% endblock content %}

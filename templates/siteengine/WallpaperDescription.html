@@ -1,0 +1,66 @@
+{% extends "./base.html" %}
+{% block title %} Wallpapers {% endblock title %}
+{% load static %}
+{% block content %}
+<div class="card mb-3 text-center">
+<img src="{{wallpaperimg.image.url}}" class="card-img-top img-fluid pl-4 pr-4" style="max-width:720px;max-height:1020px;" alt="Responsive image">
+<div class="card-body">
+    <h4 class="card-title">{{wallpaperimg.title}}</h4>
+    <p class="card-text">Download the Wallpaper or view in full resolution</p>
+    <p class="card-text">Width: {{ wallpaperimg.image.width }}</p>
+    <p class="card-text">Height: {{ wallpaperimg.image.height }}</p>
+    <a href="{%url 'downloadImage' wallpaperimg.id %}" class="btn btn-primary">Download</a>
+    <button href="#" class="btn btn-primary" data-toggle="modal" data-target=".bd-modal-lg">View in Full Res</button>
+  </div>
+  <div class="card-footer text-muted mb-2">
+      {{wallpaperimg.pub_date}}
+  </div>
+</div>
+<div class="modal fade bd-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+     <img src="{{wallpaperimg.image.url}}" alt="Full Resoluion image">
+    </div>
+  </div>
+</div>
+<div class="container mt-4">
+    {% if comments %}
+    <h2> Comments:</h2>
+    {% endif %}
+{% for comment in comments %}
+        <div class="comments" style="padding: 10px;">
+          <p class="font-weight-bold">
+            {{ comment.user }}
+            <span class=" text-muted font-weight-normal">
+              {{ comment.created_on }}
+            </span>
+          </p>
+          {{ comment.comment | linebreaks }}
+        </div>
+     {% endfor %}
+<div class="card-body">
+        {% if no_login %}
+    <div class="alert alert-danger" role="alert">
+  Login is Required
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">
+        &times;
+      </span>
+    </button>
+</div>
+        {% endif %}
+        {% if new_comment %}
+        <div class="alert alert-success" role="alert">
+          Your comment is awaiting moderation
+        </div>
+        {% else %}
+        <h3>Leave a comment</h3>
+        <form method="post" style="margin-top: 1.3em;">
+          {{ comment_form.as_p }}
+          {% csrf_token %}
+          <button type="submit" class="btn btn-primary  btn-lg">Submit</button>
+        </form>
+        {% endif %}
+      </div>
+</div>
+{% endblock content %}
