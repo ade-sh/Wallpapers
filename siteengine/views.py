@@ -16,7 +16,7 @@ def index(request):
     categoryset = Categories.objects.all()
     wallpaperset = WallpaperImg.objects.all()
     carousel = Carousel.objects.all()
-    paginator = Paginator(wallpaperset, 7)  # Show 25 contacts per page.
+    paginator = Paginator(wallpaperset, 25)
     page_number = 1
     num_pages = paginator.num_pages
     page_set = {page_number - 1, page_number, page_number + 1}
@@ -30,7 +30,7 @@ def index(request):
 def browsepages(request, page):
     categoryset = Categories.objects.all()
     wallpaperset = WallpaperImg.objects.all()
-    paginator = Paginator(wallpaperset, 7)  # Show 25 contacts per page.
+    paginator = Paginator(wallpaperset, 25)
     num_pages = paginator.num_pages
     page_number = page
     page_obj = paginator.get_page(page_number)
@@ -42,7 +42,7 @@ def browsepages(request, page):
 
 def browse_category(request, categ, page):
     wallpaperset = WallpaperImg.objects.filter(category__category_name=categ)
-    paginator = Paginator(wallpaperset, 7)  # Show 25 contacts per page.
+    paginator = Paginator(wallpaperset, 25)  # Show 25 contacts per page.
     num_pages = paginator.num_pages
     page_number = page
     page_obj = paginator.get_page(page_number)

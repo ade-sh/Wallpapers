@@ -2,15 +2,22 @@
 {% block title %} Wallpapers {% endblock title %}
 {% load static %}
 {% block content %}
+<script>
+function loadFullSize() {
+     var img = document.getElementById("FullResImg");
+     img.src =" {{ wallpaperimg.image.url }} "
+}
+</script>
+
 <div class="card mb-3 text-center">
-<img src="{{wallpaperimg.image.url}}" class="card-img-top img-fluid pl-4 pr-4" style="max-width:720px;max-height:1020px;" alt="Responsive image">
+<img src="{{wallpaperimg.thumbnail.url}}" class="card-img-top img-fluid pl-4 pr-4" style="max-width:720px;max-height:1020px;" alt="Responsive image">
 <div class="card-body">
     <h4 class="card-title">{{wallpaperimg.title}}</h4>
     <p class="card-text">Download the Wallpaper or view in full resolution</p>
     <p class="card-text">Width: {{ wallpaperimg.image.width }}</p>
     <p class="card-text">Height: {{ wallpaperimg.image.height }}</p>
     <a href="{%url 'downloadImage' wallpaperimg.id %}" class="btn btn-primary">Download</a>
-    <button href="#" class="btn btn-primary" data-toggle="modal" data-target=".bd-modal-lg">View in Full Res</button>
+    <button href="#" class="btn btn-primary" onclick="loadFullSize()" data-toggle="modal" data-target=".bd-modal-lg">View in Full Res</button>
   </div>
   <div class="card-footer text-muted mb-2">
       {{wallpaperimg.pub_date}}
@@ -19,7 +26,7 @@
 <div class="modal fade bd-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
-     <img src="{{wallpaperimg.image.url}}" alt="Full Resoluion image">
+     <img id="FullResImg" style="width:100%;height:100%;">
     </div>
   </div>
 </div>
@@ -63,4 +70,5 @@
         {% endif %}
       </div>
 </div>
+
 {% endblock content %}
