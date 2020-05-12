@@ -4,12 +4,12 @@
 {% block content %}
 <!--Start of Card Group-->
 <div class="container mr-auto ml-auto mt-5">
-    <div class="row row-cols-1 row-cols-md-2">
+    <div class="row row-cols-1 row-cols-md-4">
 
         {% for wallpapers in wallpaperset %}
         <div class="col mb-4">
             <div class="card" style="width: 18rem;">
-                <img alt={{wallpapers.title}} class="card-img-top" src="{{wallpapers.image.url}}">
+                <img alt={{wallpapers.title}} class="card-img-top" src="{{wallpapers.thumbnail.url}}">
                 <div class="card-body">
                     <a href="{% url 'WDPage' wallpapers.id%}" class="stretched-link"></a>
                     <p class="card-text">{{wallpapers.title}}</p>
